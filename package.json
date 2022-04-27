@@ -4,7 +4,8 @@
   "description": "Api Rest Master Javascript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,14 @@
   "bugs": {
     "url": "https://github.com/gitbatmanhub/portafolioEver/issues"
   },
-  "homepage": "https://github.com/gitbatmanhub/portafolioEver#readme"
+  "homepage": "https://github.com/gitbatmanhub/portafolioEver#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "connect-multiparty": "^2.2.0",
+    "express": "^4.18.0",
+    "mongoose": "^6.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }
