@@ -1,7 +1,8 @@
 'use strict'
 
 var mongoose = require('mongoose');
-var Scheme = mongoose.Schema;
+var Schema = mongoose.Schema;
+
 
 var ProjectSchema= Schema({
     name: String,
@@ -12,4 +13,4 @@ var ProjectSchema= Schema({
 
 });
 
-module.exports = mongoose.nodel('Projects', ProjectSchema);
+module.exports = mongoose.model('Projects', ProjectSchema);
