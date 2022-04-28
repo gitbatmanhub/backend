@@ -13,6 +13,8 @@ var controller = {
     });
   },
 
+
+  //Método para guardar proyectos
   saveProject: function (req, res){
     var project = new Project();
 
@@ -23,6 +25,7 @@ var controller = {
     project.year= params.year;
     project.langs= params.langs;
     project.image= null;
+
 
     project.save((err, projectStored)=>{
       if(err) return res.status(500).send({message:'Error al guardar documento'});
@@ -38,6 +41,8 @@ var controller = {
     })
   },
 
+
+  //Método para devolver proyectos
   getProject: function (req, res){
       var projectId=req.params.id;
       if(projectId==null) return res.status(404).send({message:'El proyecto no existe'});
@@ -56,6 +61,9 @@ var controller = {
         });
       });
   },
+
+
+  //Método para listar proyectos
   getProjects: function (req, res){
     Project.find({}).sort('-year').exec((err, projects) =>{
 
@@ -67,7 +75,25 @@ var controller = {
 
 
     });
-  }
+  },
+
+
+  //Método para actualizar proyectos
+
+  updateProject: function (req, res){
+    var projectId= req.params.id;
+    var update = req.body;
+    Project.findByIdAndUpdate(projectId, update, {new:true}, (err, projectUpdate)=>{
+      if(err) return res.status(500).send({message: 'Error al actualizar los datos'});
+
+      if(!projectUpdate) return res.status(404).send({message:'No hay projectos para actualizar'});
+
+      return res.status(200).send({project:projectUpdate});
+
+    });
+
+  },
+
 
 };
 
