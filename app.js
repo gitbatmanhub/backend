@@ -20,10 +20,22 @@ app.use(bodyParser.json());
 //Rutas
 app.get('/', (req, res)=>{
     res.status(200).send(
-        "<h1>Página de Inicio</h1>"
-    )
+        "<h2> Pagina de inicio</h2>"
+    );
 
-})
+});
+
+
+app.post('/test:id', (req, res)=>{
+    console.log(req.body.Name);
+    console.log(req.query.web);
+    console.log(req.params.id);
+
+    res.status(200).send({
+        message: "Hola mundo desde mi API js"
+    });
+
+});
 
 //Exportar el modulo
 
