@@ -26,7 +26,7 @@ app.get('/', (req, res)=>{
 });
 
 
-app.post('/test:id', (req, res)=>{
+app.post('/test/:id', (req, res)=>{
     console.log(req.body.Name);
     console.log(req.query.web);
     console.log(req.params.id);
