@@ -106,9 +106,37 @@ var controller = {
 
       return res.status(200).send({project:projectRemove});
 
-
-
     });
+
+  },
+
+  //Método para subir proyectos (archivos)
+  uploadImage: function (req, res){
+    var projectId = req.params.id;
+    var fileName = 'Imagén no subida'
+
+    if (req.files){
+      var filePath = req.files.image.path;
+      var fileSplit = filePath.split('/');
+      var fileName = fileSplit[1];
+
+      Project.findByIdAndUpdate(projectId, {image: fileName}, {new:true}, (err, projectUpdate) => {
+        if(err) return res.status(500).send({message:'La imágen se ha subido'});
+
+        if(!projectUpdate) return res.status(404).send({message:'La imágen/proyecto no existe'});
+
+
+          return res.status(200).send({
+            project: projectUpdate
+        });
+
+      });
+    }else{
+      return res.status(200).send({
+        message: fileName
+      });
+    }
+
 
   }
 
