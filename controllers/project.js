@@ -1,5 +1,6 @@
 'use strict'
 var Project = require('../models/project');
+var fs = require('fs');
 var controller = {
   home: function (req, res){
   return res.status(200).send({
@@ -111,34 +112,61 @@ var controller = {
   },
 
   //Método para subir proyectos (archivos)
+  /*
   uploadImage: function (req, res){
     var projectId = req.params.id;
     var fileName = 'Imagén no subida'
 
     if (req.files){
-      var filePath = req.files.image.path;
-      var fileSplit = filePath.split('/');
-      var fileName = fileSplit[1];
+      let filePath = req.files.image.path;
+      let fileSplit = filePath.split('/');
+      let fileName = fileSplit[1];
+      let extSplit = fileName.split('/.');
+      let fileExt = extSplit[1];
 
-      Project.findByIdAndUpdate(projectId, {image: fileName}, {new:true}, (err, projectUpdate) => {
-        if(err) return res.status(500).send({message:'La imágen se ha subido'});
 
-        if(!projectUpdate) return res.status(404).send({message:'La imágen/proyecto no existe'});
+      if(fileExt == 'png' || fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'gif'){
+        Project.findByIdAndUpdate(projectId, {image: fileName}, {new: true}, (err, projectUpdated) => {
+          if(err) return res.status(500).send({message: 'La imagen no se ha subido'});
 
+          if(!projectUpdated) return res.status(404).send({message: 'El proyecto no existe y no se ha asignado la imagen'});
 
           return res.status(200).send({
-            project: projectUpdate
+            project: projectUpdated
+          });
         });
 
-      });
+      }else{
+        fs.unlink(filePath, (err) => {
+          return res.status(200).send({message: 'La extensión no es válida'});
+        });
+      }
+
     }else{
       return res.status(200).send({
         message: fileName
       });
     }
 
+  },
 
+  getImageFile: function(req, res){
+    var file = req.params.image;
+    var path_file = './uploads/'+file;
+
+    fs.exists(path_file, (exists) => {
+      if(exists){
+        return res.sendFile(path.resolve(path_file));
+      }else{
+        return res.status(200).send({
+          message: "No existe la imagen..."
+        });
+      }
+    });
   }
+
+   */
+
 
 
 
