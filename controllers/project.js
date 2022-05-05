@@ -1,6 +1,7 @@
 'use strict'
 var Project = require('../models/project');
 var fs = require('fs');
+var path = require ('path');
 
 
 
@@ -43,6 +44,8 @@ var controller = {
       project: project,
       message: 'Método saveProject'
     })
+
+
   },
 
 
@@ -116,6 +119,8 @@ var controller = {
 
   },
 
+  //Método para subir imágenes con extensiones especificas
+
   uploadImage: function (req, res){
     var projectId =req.params.id;
     var fileName = 'Imagen no subida'
@@ -156,10 +161,28 @@ var controller = {
         message: fileName
       });
     }
+  },
+
+  //Método que me devuelve las imágenes
+
+  getImageFile: function (req, res){
+    var file = req.params.image;
+    var pathFile = './uploads/'+file;
+    fs.exists(pathFile, (exists)=>{
+      if (exists){
+        return res.sendFile(path.resolve(pathFile));
+      }else{
+        return res.status(200).send({
+          message: 'No existe la imágen'
+            })
+
+      }
+    });
   }
 
 
-}
+
+};
 
 
 module.exports= controller;
